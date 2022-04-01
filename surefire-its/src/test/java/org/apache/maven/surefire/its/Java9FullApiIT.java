@@ -55,9 +55,7 @@ public class Java9FullApiIT
                 .verifyTextInLog( "loaded class javax.xml.bind.JAXBException" )
                 .verifyTextInLog( "loaded class javax.transaction.TransactionManager" )
                 .verifyTextInLog( "loaded class javax.transaction.InvalidTransactionException" )
-                .assertThatLogLine( anyOf( is( "java.specification.version=9" ),
-                                           is( "java.specification.version=10" ),
-                                           is( "java.specification.version=11" ) ),
+                .assertThatLogLine( is( "java.specification.version=" + extractExternalJavaVersion() ),
                                     greaterThanOrEqualTo( 1 ) );
     }
 
@@ -76,9 +74,7 @@ public class Java9FullApiIT
                 .verifyTextInLog( "loaded class javax.xml.bind.JAXBException" )
                 .verifyTextInLog( "loaded class javax.transaction.TransactionManager" )
                 .verifyTextInLog( "loaded class javax.transaction.InvalidTransactionException" )
-                .assertThatLogLine( anyOf( is( "java.specification.version=9" ),
-                                           is( "java.specification.version=10" ),
-                                           is( "java.specification.version=11" ) ),
+                .assertThatLogLine( is( "java.specification.version=" + extractExternalJavaVersion() ),
                                     greaterThanOrEqualTo( 1 ) );
     }
 
@@ -98,10 +94,9 @@ public class Java9FullApiIT
                 .verifyTextInLog( "loaded class javax.xml.bind.JAXBException" )
                 .verifyTextInLog( "loaded class javax.transaction.TransactionManager" )
                 .verifyTextInLog( "loaded class javax.transaction.InvalidTransactionException" )
-                .assertThatLogLine( anyOf( is( "java.specification.version=9" ),
-                                           is( "java.specification.version=10" ),
-                                           is( "java.specification.version=11" ) ),
-                                    greaterThanOrEqualTo( 1 ) );
+                .assertThatLogLine(
+                        is( "java.specification.version=" + System.getProperty( "java.specification.version" ) ),
+                        greaterThanOrEqualTo( 1 ) );
     }
 
     @Override

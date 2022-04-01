@@ -39,7 +39,7 @@ public class JUnit47RerunFailingTestWithCucumberIT
 
     @Before
     public void assumeJdk17() {
-        assumeJavaVersion(1.7d);
+        assumeJavaVersion(1.8d);
     }
 
 

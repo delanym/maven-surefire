@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import static java.lang.Double.parseDouble;
 import static org.apache.maven.surefire.its.fixture.SurefireLauncher.EXT_JDK_HOME;
 import static org.apache.maven.surefire.its.fixture.SurefireLauncher.EXT_JDK_HOME_KEY;
 import static org.junit.Assert.fail;
@@ -64,17 +65,7 @@ public abstract class AbstractJigsawIT
         return unpack();
     }
 
-    private SurefireLauncher unpack()
-    {
-        return unpack( getProjectDirectoryName() );
-    }
-
-    private static boolean isJavaVersion9AtLeast()
-    {
-        return Double.valueOf( System.getProperty( "java.specification.version" ) ) >= JIGSAW_JAVA_VERSION;
-    }
-
-    private static boolean isExtJavaVerion9AtLeast() throws IOException
+    protected static String extractExternalJavaVersion() throws IOException
     {
         File release = new File( EXT_JDK_HOME, "release" );
         assumeTrue( EXT_JDK_HOME_KEY + " was provided with value " + EXT_JDK_HOME + " but file does not exist "
@@ -99,6 +90,22 @@ public abstract class AbstractJigsawIT
         {
             fail( "unexpected java version format" );
         }
+        return javaVersion;
+    }
+
+    private SurefireLauncher unpack()
+    {
+        return unpack( getProjectDirectoryName() );
+    }
+
+    private static boolean isJavaVersion9AtLeast()
+    {
+        return parseDouble( System.getProperty( "java.specification.version" ) ) >= JIGSAW_JAVA_VERSION;
+    }
+
+    private static boolean isExtJavaVerion9AtLeast() throws IOException
+    {
+        String javaVersion = extractExternalJavaVersion();
 
         return Double.valueOf( javaVersion ) >= JIGSAW_JAVA_VERSION;
     }
