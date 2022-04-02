@@ -26,9 +26,6 @@ import java.io.File;
 
 import static org.apache.maven.surefire.its.fixture.SurefireLauncher.EXT_JDK_HOME;
 import static org.apache.maven.surefire.its.fixture.SurefireLauncher.EXT_JDK_HOME_KEY;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
 
 /**
  * Running Surefire on the top of JDK 9 and should be able to load
@@ -54,8 +51,7 @@ public class Java9FullApiIT
                 .verifyTextInLog( "loaded class javax.xml.bind.JAXBException" )
                 .verifyTextInLog( "loaded class javax.transaction.TransactionManager" )
                 .verifyTextInLog( "loaded class javax.transaction.InvalidTransactionException" )
-                .assertThatLogLine( is( "java.specification.version=" + extractExternalJavaVersion() ),
-                                    greaterThanOrEqualTo( 1 ) );
+                .verifyTextInLog( "java.specification.version is " + extractExternalJavaVersion() );
     }
 
     @Test
@@ -72,8 +68,7 @@ public class Java9FullApiIT
                 .verifyTextInLog( "loaded class javax.xml.bind.JAXBException" )
                 .verifyTextInLog( "loaded class javax.transaction.TransactionManager" )
                 .verifyTextInLog( "loaded class javax.transaction.InvalidTransactionException" )
-                .assertThatLogLine( is( "java.specification.version=" + extractExternalJavaVersion() ),
-                                    greaterThanOrEqualTo( 1 ) );
+                .verifyTextInLog( "java.specification.version is " + extractExternalJavaVersion() );
     }
 
     @Test
@@ -92,9 +87,8 @@ public class Java9FullApiIT
                 .verifyTextInLog( "loaded class javax.xml.bind.JAXBException" )
                 .verifyTextInLog( "loaded class javax.transaction.TransactionManager" )
                 .verifyTextInLog( "loaded class javax.transaction.InvalidTransactionException" )
-                .assertThatLogLine(
-                        is( "java.specification.version=" + System.getProperty( "java.specification.version" ) ),
-                        greaterThanOrEqualTo( 1 ) );
+                .verifyTextInLog( "java.specification.version is "
+                        + System.getProperty( "java.specification.version" ) );
     }
 
     @Override
