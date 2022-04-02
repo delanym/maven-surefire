@@ -32,7 +32,7 @@ properties(
 
 final def oses = ['linux':'ubuntu', 'windows':'windows-he']
 final def mavens = env.BRANCH_NAME == 'master' ? ['3.2.x', '3.8.x'] : ['3.8.x']
-final def jdks = [7, 8, 11, 18]
+final def jdks = [7, 8, 11, 17]
 
 final def options = ['-e', '-V', '-B', '-nsu', '-P', 'run-its']
 final def goals = ['clean', 'install', 'jacoco:report']

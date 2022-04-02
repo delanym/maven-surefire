@@ -46,7 +46,6 @@ public class Java9FullApiIT
     {
         OutputValidator validator = assumeJigsaw()
                                             .setForkJvm()
-                                            .debugLogging()
                                             .execute( "verify" )
                                             .verifyErrorFree( 1 );
 
@@ -64,7 +63,6 @@ public class Java9FullApiIT
     {
         OutputValidator validator = assumeJava9Property()
                                             .setForkJvm()
-                                            .debugLogging()
                                             .sysProp( EXT_JDK_HOME_KEY, new File( EXT_JDK_HOME ).getCanonicalPath() )
                                             .execute( "verify" )
                                             .verifyErrorFree( 1 );
