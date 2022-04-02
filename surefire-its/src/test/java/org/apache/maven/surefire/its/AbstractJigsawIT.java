@@ -51,7 +51,7 @@ public abstract class AbstractJigsawIT
     protected SurefireLauncher assumeJigsaw() throws IOException
     {
         assumeTrue( "There's no JDK 9 provided.",
-                          isJavaVersion9AtLeast() || EXT_JDK_HOME != null && isExtJavaVerion9AtLeast() );
+                          isJavaVersion9AtLeast() || EXT_JDK_HOME != null && isExtJavaVersion9AtLeast() );
         // fail( EXT_JDK_HOME_KEY + " was provided with value " + EXT_JDK_HOME + " but it is not Jigsaw Java 9." );
 
         SurefireLauncher launcher = unpack();
@@ -61,7 +61,7 @@ public abstract class AbstractJigsawIT
 
     protected SurefireLauncher assumeJava9Property() throws IOException
     {
-        assumeTrue( "There's no JDK 9 provided.", EXT_JDK_HOME != null && isExtJavaVerion9AtLeast() );
+        assumeTrue( "There's no JDK 9 provided.", EXT_JDK_HOME != null && isExtJavaVersion9AtLeast() );
         return unpack();
     }
 
@@ -84,7 +84,9 @@ public abstract class AbstractJigsawIT
         }
         else if ( versions.countTokens() >= 2 )
         {
-            javaVersion = versions.nextToken() + "." + versions.nextToken();
+            String v1 = versions.nextToken();
+            String v2 = versions.nextToken();
+            javaVersion = v1.equals( "1" ) ? v1 + "." + v2 : v1;
         }
         else
         {
@@ -103,10 +105,10 @@ public abstract class AbstractJigsawIT
         return parseDouble( System.getProperty( "java.specification.version" ) ) >= JIGSAW_JAVA_VERSION;
     }
 
-    private static boolean isExtJavaVerion9AtLeast() throws IOException
+    private static boolean isExtJavaVersion9AtLeast() throws IOException
     {
         String javaVersion = extractExternalJavaVersion();
 
-        return Double.valueOf( javaVersion ) >= JIGSAW_JAVA_VERSION;
+        return parseDouble( javaVersion ) >= JIGSAW_JAVA_VERSION;
     }
 }
