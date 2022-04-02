@@ -143,7 +143,7 @@ public final class SurefireLauncher
         goals.add( "-Dsurefire.version=" + surefireVersion );
 
         String jacocoAgent = System.getProperty( "jacoco.agent", "" );
-        goals.add( "-Djacoco.agent=" + jacocoAgent );
+        //goals.add( "-Djacoco.agent=" + jacocoAgent );
 
         goals.add( "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" );
 
