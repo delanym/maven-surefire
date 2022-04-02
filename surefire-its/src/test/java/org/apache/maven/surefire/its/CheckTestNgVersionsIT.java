@@ -29,6 +29,8 @@ import org.apache.maven.surefire.its.fixture.SurefireLauncher;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.apache.commons.lang3.JavaVersion.JAVA_9;
+import static org.apache.commons.lang3.JavaVersion.JAVA_RECENT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -171,6 +173,16 @@ public class CheckTestNgVersionsIT
         if ( classifier != null )
         {
             launcher.sysProp( "testNgClassifier", classifier );
+        }
+
+        if ( ( version.startsWith( "5.12" ) || version.startsWith( "5.13" ) || version.startsWith( "5.14" ) )
+                && JAVA_RECENT.atLeast( JAVA_9 ) )
+        {
+            // TestNG 5.12 - 5.14 uses Guava lib ang CGLib with reflective access.
+            // WARNING: Illegal reflective access by com.google.inject.internal.cglib.core.ReflectUtils$2
+            // (testng-5.12.1.jar) to method
+            // java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain)
+            launcher.argLine( "--illegal-access=deny --add-opens java.base/java.lang=ALL-UNNAMED" );
         }
 
         final OutputValidator outputValidator = launcher.executeTest();
